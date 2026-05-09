@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>react</title>
+    <link rel="stylesheet" href="https://vensoeng.vercel.app/ngalert@0.1.0/dist/ngalert.css">
+    <script src="https://vensoeng.vercel.app/ngalert@0.1.0/dist/ngalert.js"></script>
+    <script>
+    ngAlert.init({
+      duration:4000,
+      closeOnOverlay: false,
+      labels: {
+        success: 'Success',
+        warning: 'Warning',
+        error: 'Error',
+        info: 'Info',
+      },
+    });
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
