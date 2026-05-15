@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api, { API_BASE_URL } from "../../api";
 import "../../dashboard.css";
-
-const API_BASE = "http://localhost:3000";
 
 export default function Dashboard() {
   // User & Auth
@@ -33,7 +31,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`${API_BASE}/auth/me`, {
+        const res = await api.get("/auth/me", {
           headers: { Authorization: `Bearer ${token}` }
         });
         setUser(res.data);
@@ -53,7 +51,7 @@ export default function Dashboard() {
   const fetchItems = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${API_BASE}/items`, {
+      const res = await api.get("/items", {
         headers: { Authorization: `Bearer ${token}` }
       });
       setItems(res.data);
@@ -108,7 +106,7 @@ export default function Dashboard() {
       data.append("price", formData.price);
       if (formData.image) data.append("image", formData.image);
 
-      await axios.post(`${API_BASE}/items`, data, {
+      await api.post("/items", data, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data"
@@ -154,7 +152,7 @@ export default function Dashboard() {
         if (fileInput?.files[0]) data.append("image", fileInput.files[0]);
       }
 
-      await axios.put(`${API_BASE}/items/${editingItem.id}`, data, {
+      await api.put(`/items/${editingItem.id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data"
@@ -176,7 +174,7 @@ export default function Dashboard() {
   // Delete Item
   const handleDeleteItem = async (id) => {
     try {
-      await axios.delete(`${API_BASE}/items/${id}`, {
+      await api.delete(`/items/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setDeleteConfirm(null);
@@ -276,7 +274,7 @@ export default function Dashboard() {
               <div key={item.id} className="item-card">
                 {item.image && (
                   <img
-                    src={`${API_BASE}/uploads/${item.image}`}
+                    src={`${API_BASE_URL}/uploads/${item.image}`}
                     alt={item.name}
                     className="item-image"
                   />
@@ -364,7 +362,7 @@ export default function Dashboard() {
                 )}
                 {editingItem?.image && !editImagePreview && (
                   <div className="image-preview">
-                    <img src={`${API_BASE}/uploads/${editingItem.image}`} alt={editingItem.name} />
+                    <img src={`${API_BASE_URL}/uploads/${editingItem.image}`} alt={editingItem.name} />
                   </div>
                 )}
               </div>

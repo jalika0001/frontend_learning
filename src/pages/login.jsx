@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -26,8 +26,8 @@ export default function Login() {
 
     try {
 
-      const res = await axios.post(
-        "http://localhost:3000/auth/login",
+      const res = await api.post(
+        "/auth/login",
         {
           username,
           password
@@ -43,11 +43,11 @@ export default function Login() {
       navigate("/admin");
 
     } catch (err) {
+      const message = err.code === "ERR_NETWORK"
+        ? "Cannot reach API server. Check VITE_API_URL and backend status."
+        : (err.response?.data?.message || "Login failed");
 
-      // alert(
-      //   err.response?.data?.message ||
-      //   "Login failed"
-      // );
+      alert(message);
     }
   };
 
